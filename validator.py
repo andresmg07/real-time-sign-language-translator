@@ -15,7 +15,7 @@ from util.plotter_util import plot_confusion_matrix, plot_bar_chart
 
 def load_object(load_path):
     """
-    Function that load the list of features from disk to python
+    Function that loads the list of features from disk to python
     :param load_path: path in which the features are saved
     :return: list of tuples containing observations and labels
     """
