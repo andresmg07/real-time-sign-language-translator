@@ -1,4 +1,4 @@
-# Landscape recognizer
+# Real-time sign language translator
  
 Real-time American Sign Language translator. Powered by artificial intelligence leveraging Support Vector Machines (SVM), OpenCV library and MediaPipe hands module. 
 
@@ -11,6 +11,24 @@ Real-time American Sign Language translator. Powered by artificial intelligence 
 
 ## Project description
 
+### Training dataset
+
+The dataset used for this project is the [ASL (American Sign Language) Alphabet Dataset from Kaggle](https://www.kaggle.com/datasets/debashishsau/aslamerican-sign-language-aplhabet-dataset/data), which contains a collection of images for training on each sign of the _ASL_ alphabet. These images depict hands from various individuals. Each letter of the alphabet is represented by an average of 7,500 images, which exhibit a variety of skin tones and lighting conditions.
+        
+To ensure the quality of the data that will feed into the model, the following exclusion criteria were established: 
+- **Incomplete images:** Images in which the hand is not fully visible will be removed. 
+- **Low-quality images:** Images with excessive digital noise resulting in a "pixelated" appearance will be discarded. 
+- **Irrelevant images:** Images in which no hand is present will be excluded.
+
+Additionally, image collections corresponding to the letters "J" and "Z" will be completely discarded, as their representation requires a series of specific movements that cannot be captured in static images. Similarly, images representing deletion and space operations will be removed, as they are not relevant to the proposed recognizer. These measures are aimed at minimizing confusion and maximizing the accuracy of sign identification within the _ASL_.
+
+### Architecture
+
+![System architecture blocks diagram](assets/architecture.jpg)
+
+### Model validation
+Cross-validation was chosen as the model validation strategy. This method involves dividing the entire dataset into percentages, where 75\% of the specimens are used for model training, and the remaining 25\% are reserved for validation. The split ratio was selected as it constitutes a standard proportion for dataset division.
+
 ## Results
 
 ## Result analysis
@@ -22,7 +40,7 @@ Real-time American Sign Language translator. Powered by artificial intelligence 
 ## Author
 
 **Andrés Montero Gamboa**<br>
-Computing engineering undergraduate<br>
+Computing Engineering Undergraduate<br>
 Instituto Tecnológico de Costa Rica (TEC)<br>
 [LinkedIn](https://www.linkedin.com/in/andres-montero-gamboa) | [GitHub](https://github.com/andresmg07)
 
