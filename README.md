@@ -4,17 +4,33 @@ Real-time American Sign Language translator. Powered by artificial intelligence 
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=white)
 ![OpenCV](https://img.shields.io/badge/opencv-%23white.svg?style=flat&logo=opencv&logoColor=white)
-![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=flat&logo=numpy&logoColor=white)
-![scikit-learn Badge](https://img.shields.io/badge/scikit--learn-F7931E?logo=scikitlearn&logoColor=fff&style=flat)
 ![MediaPipe Badge](https://img.shields.io/badge/MediaPipe-0097A7?logo=mediapipe&logoColor=fff&style=flat)
+![scikit-learn Badge](https://img.shields.io/badge/scikit--learn-F7931E?logo=scikitlearn&logoColor=fff&style=flat)
+![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=flat&logo=numpy&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 ## Project description
 
+![Demo GIF]()
+
+
+This documentation is an extract of the final executive technical report of 
+the project "Comparison of the Effectiveness of an American Sign Language
+(ASL) Recognizer with Implementations Based on Statistical Classification and Support Vector Machines" 
+from _Introduction to pattern recognition_ course.
+
+This system was made possible through the combination of state-of-the-art methodologies,
+such as computer vision, digital image pre-processing, statistical methods and support vector machines.
+The scope of the project encompasses the solution design, implementation and training of the predictive model. 
+
+Here can be found the research paper that presents in-depth documentation of the design and implementation process,
+comparative analysis of recognition effectiveness between the implemented models,
+findings, recommendations, and conclusions.
+
 ### Training dataset
 
 The dataset used for this project is the [ASL (American Sign Language) Alphabet Dataset from Kaggle](https://www.kaggle.com/datasets/debashishsau/aslamerican-sign-language-aplhabet-dataset/data), which contains a collection of images for training on each sign of the _ASL_ alphabet. These images depict hands from various individuals. Each letter of the alphabet is represented by an average of 7,500 images, which exhibit a variety of skin tones and lighting conditions.
-        
+
 To ensure the quality of the data that will feed into the model, the following exclusion criteria were established: 
 - **Incomplete images:** Images in which the hand is not fully visible will be removed. 
 - **Low-quality images:** Images with excessive digital noise resulting in a "pixelated" appearance will be discarded. 
@@ -23,6 +39,21 @@ To ensure the quality of the data that will feed into the model, the following e
 Additionally, image collections corresponding to the letters "J" and "Z" will be completely discarded, as their representation requires a series of specific movements that cannot be captured in static images. Similarly, images representing deletion and space operations will be removed, as they are not relevant to the proposed recognizer. These measures are aimed at minimizing confusion and maximizing the accuracy of sign identification within the _ASL_.
 
 ### Architecture
+
+The proposed architecture begins by gathering data from two sources:
+a pre-existing ASL alphabet dataset (training stage) and a live video feed (predicting stage).
+Selected images from the dataset and frames from the video are processed by a **Preprocessing Module**,
+which identifies hand knuckles and joint points using MediaPipe.
+
+These key points are flattened into feature vectors, which then enter the **Classifier Trainer**,
+where a Support Vector Regression (SVR) model is trained to recognize ASL letters.
+Once trained, this **Classifier** predicts the alphabet letters from live video feed gestures in real time.
+
+The system includes two outputs:
+a **Prediction Accuracy Validator**
+to assess model accuracy during training and a **Live Prediction Viewer** to display real-time predictions.
+Training and recognition paths are marked in blue and red, respectively.
+The result is an efficient, interactive ASL translation tool.
 
 ![System architecture blocks diagram](assets/architecture.jpg)
 
@@ -34,8 +65,6 @@ Cross-validation was chosen as the model validation strategy. This method involv
 ## Result analysis
 
 ## Conclusion
-
-## Demo
 
 ## Author
 
