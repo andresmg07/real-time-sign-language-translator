@@ -38,7 +38,7 @@ This system was made possible through the combination of state-of-the-art method
 such as computer vision, digital image pre-processing and support vector machines.
 The scope of the project encompasses the solution design, implementation and training of the predictive model. 
 
-Here can be found the research paper that presents in-depth documentation of the design and implementation process,
+_AWAITING REVIEW TO PUBLISH:_ Here can be found the research paper that presents in-depth documentation of the design and implementation process,
 comparative analysis of recognition effectiveness between the implemented models,
 findings, recommendations, and conclusions.
 

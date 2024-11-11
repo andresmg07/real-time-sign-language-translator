@@ -18,12 +18,12 @@ mp_hands = mp.solutions.hands
 
 # OpenCV text writes constants
 font = cv2.FONT_HERSHEY_SIMPLEX
-bottomLeftCornerOfText = (10, 500)
-fontScale = 1
+fontScale = 2
 fontColor = (255, 255, 255)
-thickness = 4
+thickness = 6
 lineType = 2
-org = (50, 50)
+org = (40, 85)
+X, Y, W, H = 0, 0, 125, 125
 
 # Feature extraction limit
 MAX_IMAGES_PER_CLASS = 7500
@@ -89,10 +89,9 @@ def video_feature_extraction(classifier):
             # Make letter prediction using classifier
             if results.multi_hand_landmarks:
                 predictions = classifier.predict([format_vector(results.multi_hand_landmarks[0].landmark)])
-                x, y, w, h = 0, 0, 125, 75
 
                 # Draw black background rectangle
-                cv2.rectangle(image, (x, x), (x + w, y + h), (0, 0, 0), -1)
+                cv2.rectangle(image, (X, X), (X + W, Y + H), (0, 0, 0), -1)
 
                 cv2.putText(
                     image,
