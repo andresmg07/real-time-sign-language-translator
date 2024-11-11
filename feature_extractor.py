@@ -11,22 +11,32 @@ import sys
 
 from validator import get_classifier
 
-# Media pipe utilitarians
-mp_drawing = mp.solutions.drawing_utils
-mp_drawing_styles = mp.solutions.drawing_styles
-mp_hands = mp.solutions.hands
+# Labels and messages
+MAIN_ARG_ERROR = "Missing machine code argument."
+CURRENT_LETTER = "Current letter: "
+MEDIAPIPE_VIDEO_CAPTURE_ERROR_MESSAGE = "Ignoring empty camera frame."
+MEDIAPIPE_FRAME_TITLE = "Real-Time Sign Language Translator"
 
-# OpenCV text writes constants
-font = cv2.FONT_HERSHEY_SIMPLEX
-fontScale = 2
-fontColor = (255, 255, 255)
-thickness = 6
-lineType = 2
-org = (40, 85)
-X, Y, W, H = 0, 0, 125, 125
+# IO
+PNG_FILE_EXTENSION = ".png"
 
 # Feature extraction limit
 MAX_IMAGES_PER_CLASS = 7500
+
+# Media pipe utilitarians
+MP_DRAWING = mp.solutions.drawing_utils
+MP_DRAWING_STYLES = mp.solutions.drawing_styles
+MP_HANDS = mp.solutions.hands
+
+# OpenCV text writes constants
+FONT = cv2.FONT_HERSHEY_SIMPLEX
+FONT_SCALE = 2
+FONT_COLOR = (255, 255, 255)
+THICKNESS = 6
+LINE_TYPE = 2
+ORG = (40, 85)
+X, Y, W, H = 0, 0, 125, 125
+
 
 def format_vector(landmarks):
     """
@@ -50,7 +60,7 @@ def video_feature_extraction(classifier):
     cap = cv2.VideoCapture(0)
 
     # Init hands recognizer from mediapipe
-    with mp_hands.Hands(
+    with MP_HANDS.Hands(
             model_complexity=0,
             max_num_hands=2,
             min_detection_confidence=0.5,
@@ -59,9 +69,8 @@ def video_feature_extraction(classifier):
             # Read camera image
             success, image = cap.read()
 
-            # If read not successful ignore
             if not success:
-                print("Ignoring empty camera frame.")
+                print(MEDIAPIPE_VIDEO_CAPTURE_ERROR_MESSAGE)
                 continue
 
             # To improve performance, optionally mark the image as not writeable to
@@ -76,12 +85,12 @@ def video_feature_extraction(classifier):
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
             if results.multi_hand_landmarks:
                 for hand_landmarks in results.multi_hand_landmarks:
-                    mp_drawing.draw_landmarks(
+                    MP_DRAWING.draw_landmarks(
                         image,
                         hand_landmarks,
-                        mp_hands.HAND_CONNECTIONS,
-                        mp_drawing_styles.get_default_hand_landmarks_style(),
-                        mp_drawing_styles.get_default_hand_connections_style())
+                        MP_HANDS.HAND_CONNECTIONS,
+                        MP_DRAWING_STYLES.get_default_hand_landmarks_style(),
+                        MP_DRAWING_STYLES.get_default_hand_connections_style())
 
             # Flip the image horizontally for a selfie-view display.
             image = cv2.flip(image, 1)
@@ -96,18 +105,18 @@ def video_feature_extraction(classifier):
                 cv2.putText(
                     image,
                     predictions[0],
-                    org,
-                    font,
-                    fontScale,
-                    fontColor,
-                    thickness,
-                    lineType
+                    ORG,
+                    FONT,
+                    FONT_SCALE,
+                    FONT_COLOR,
+                    THICKNESS,
+                    LINE_TYPE
                 )
 
             # Show image
-            cv2.imshow('MediaPipe Hands', image)
+            cv2.imshow(MEDIAPIPE_FRAME_TITLE, image)
 
-            # If exit key is hit break loop
+            # If an exit key is hit break loop
             if cv2.waitKey(5) & 0xFF == 27:
                 break
 
@@ -132,24 +141,25 @@ def draw_landmarks(image, landmarks, save_path, image_name):
     :param save_path: path where to save the image with the landmarks draw
     :param image_name: export image name
     """
-    mp_drawing.draw_landmarks(
+    MP_DRAWING.draw_landmarks(
         image,
         landmarks,
-        mp_hands.HAND_CONNECTIONS,
-        mp_drawing_styles.get_default_hand_landmarks_style(),
-        mp_drawing_styles.get_default_hand_connections_style())
-    cv2.imwrite(save_path + image_name + ".png", image)
+        MP_HANDS.HAND_CONNECTIONS,
+        MP_DRAWING_STYLES.get_default_hand_landmarks_style(),
+        MP_DRAWING_STYLES.get_default_hand_connections_style())
+    cv2.imwrite(save_path + image_name + PNG_FILE_EXTENSION, image)
 
 
 def extract_features(dataset_path, save_path):
     """
-    Procedure that extracts the features of images located at the dataset_path and saves its features vectors to the save_path
+    Procedure that extracts the features of images located at the dataset_path
+    and saves its feature vectors to the save_path
     :param dataset_path: directory containing the dataset directories
-    :param save_path: directory where to save the features vectors binary
+    :param save_path: directory where to save the feature vectors binary
     """
     features_vectors = {}
 
-    with mp_hands.Hands(
+    with MP_HANDS.Hands(
             static_image_mode=True,
             max_num_hands=1,
             min_detection_confidence=0.5
@@ -160,7 +170,7 @@ def extract_features(dataset_path, save_path):
         # For each directory retrieve its files
         for directory in dirs:
 
-            print("Current letter: " + directory)
+            print(CURRENT_LETTER + directory)
 
             # Full directory path
             full_dir = join(dataset_path, directory)
@@ -183,13 +193,13 @@ def extract_features(dataset_path, save_path):
                 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
                 # Retrieve media pipe results
                 results = hands.process(image)
-                # If the landmarks were found save its features
+                # If the landmarks were found, save its features
                 if results.multi_hand_landmarks:
-                    # Append the features vector to the class key in dictionary
+                    # Append the feature vector to the class key in dictionary
                     features_vectors[directory].append(format_vector(results.multi_hand_landmarks[0].landmark))
                     count += 1  # Count new specimen
 
-        # Save features to pickle binary file
+        # Save features to pickle a binary file
         save_features(features_vectors, save_path)
 
 
@@ -197,5 +207,5 @@ def extract_features(dataset_path, save_path):
 if __name__ == "__main__":
     # This function will only be run if the current file is run directly
     if len(sys.argv) < 3:
-        raise Exception("Missing machine code argument.")
+        raise Exception(MAIN_ARG_ERROR)
     extract_features(sys.argv[1], sys.argv[2])

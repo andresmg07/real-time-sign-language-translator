@@ -1,6 +1,6 @@
 # Real-time sign language translator
  
-AI-driven real-time American Sign Language translator. Implemented leveraging Support Vector Machines (SVM), OpenCV library and MediaPipe hands module. 
+AI-driven real-time American Sign Language translator. Implemented leveraging Support Vector Machines (SVM), OpenCV library, and MediaPipe hands module. 
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=white)
 ![OpenCV](https://img.shields.io/badge/opencv-%23white.svg?style=flat&logo=opencv&logoColor=white)
@@ -28,6 +28,10 @@ AI-driven real-time American Sign Language translator. Implemented leveraging Su
   * [License](#license)
 
 ## Project description
+
+![HnVideoEditor_2024_11_11_163205292-ezgif.com-speed.gif](assets/demo.gif)
+_American Sign Language "Hello world" spelling translation via real-time recognition._
+
 
 This documentation is an extract of the final executive technical report of 
 the project "Comparison of the Effectiveness of an American Sign Language

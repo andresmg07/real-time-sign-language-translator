@@ -12,6 +12,29 @@ import seaborn as sn
 from classes.StatisticalClassifier import StatisticalClassifier
 from util.plotter_util import plot_confusion_matrix, plot_bar_chart
 
+# Letters
+J_LETTER = "J"
+Z_LETTER = "Z"
+
+# IO
+WRITE_BINARY = "wb"
+READ_BINARY = "rb"
+
+# Files and directories
+FEATURES_SOURCE_FILE ="7500_features_dump.pkl"
+MODEL_SOURCE_FILE = "trained_model.pkl"
+FEATURES_DIRECTORY_ROUTE = "./features/"
+MODEL_DIRECTORY_ROUTE = "./model"
+
+# SVM
+SVM_KERNEL = "linear"
+
+# Labels and messages
+OVERALL_SCORE = "Overall score: "
+CONFUSION_TITLE = "Matriz de confusión para la clasificación del abecedario ASL"
+CONFUSION_X_LABEL = "Predicciones"
+CONFUSION_Y_LABEL = "Objetivo"
+
 
 def load_object(load_path):
     """
@@ -19,7 +42,7 @@ def load_object(load_path):
     :param load_path: path in which the features are saved
     :return: list of tuples containing observations and labels
     """
-    with open(join(load_path, "7500_features_dump.pkl"), "rb") as reader:
+    with open(join(load_path, FEATURES_SOURCE_FILE), READ_BINARY) as reader:
         return pickle.load(reader)
 
 
@@ -29,7 +52,7 @@ def load_model(load_path):
     :param load_path: path in which the model was saved
     :return: Classification model
     """
-    with open(load_path, "rb") as reader:
+    with open(load_path, READ_BINARY) as reader:
         return pickle.load(reader)
 
 
@@ -39,15 +62,15 @@ def save_model(features, save_path):
     :param save_path: path in which the features will be saved
     :param features: array of features to save
     """
-    with open(join(save_path, "trained_model.pkl"), "wb") as writer:
+    with open(join(save_path, MODEL_SOURCE_FILE), WRITE_BINARY) as writer:
         writer.write(pickle.dumps(features))
 
 
 def show_confusion_matrix(confusion_matrix):
     sn.heatmap(confusion_matrix, annot=True, fmt='g')
-    plt.title("Matriz de confusión para la clasificación del abecedario ASL")
-    plt.xlabel("Predicciones")
-    plt.ylabel("Objetivo")
+    plt.title(CONFUSION_TITLE)
+    plt.xlabel(CONFUSION_X_LABEL)
+    plt.ylabel(CONFUSION_Y_LABEL)
     plt.show()
 
 
@@ -58,7 +81,7 @@ def get_support_vector_machine_model(vectors):
     :return: Trained SVM model
     """
     # Instance the model
-    svm = sklearn.svm.SVC(kernel='linear', C=1.0)
+    svm = sklearn.svm.SVC(kernel=SVM_KERNEL, C=1.0)
 
     # Convert the data
     x = []
@@ -81,7 +104,7 @@ def get_classifier(trained_model_path=""):
     if trained_model_path == "":
         statisticalClassifier = StatisticalClassifier()
         # Load default features
-        vectors = load_object("./features/")
+        vectors = load_object(FEATURES_DIRECTORY_ROUTE)
         # Split dataset into training and testing
         train_dataset, test_dataset = statisticalClassifier.split(vectors)
         # Train the classifier
@@ -104,13 +127,13 @@ def main_statistical():
     for i in range(confusion_matrix.shape[0]):
         print(f"Class {i}: accuracy: {confusion_matrix[i, i] / np.sum(confusion_matrix[i])}")
 
-    print("Overall score: ", score)
+    print(OVERALL_SCORE, score)
 
-    save_model(statisticalClassifier, "./model")
+    save_model(statisticalClassifier, MODEL_DIRECTORY_ROUTE)
 
 def main_SVM():
     statisticalClassifier = StatisticalClassifier()
-    vectors = load_object("./features/")
+    vectors = load_object(FEATURES_DIRECTORY_ROUTE)
     train, test = statisticalClassifier.split(vectors)
     svm = get_support_vector_machine_model(train)
 
@@ -132,7 +155,7 @@ def main_SVM():
     for i in range(len(prediction)):
         confusion_matrix[class_map[y[i]], class_map[prediction[i]]] += 1
 
-    letters = list(filter(lambda c: c != 'J' and c != 'Z', list(map(chr, range(65, 91)))))
+    letters = list(filter(lambda c: c != J_LETTER and c != Z_LETTER, list(map(chr, range(65, 91)))))
     confusion_matrix_data_frame = pd.DataFrame(confusion_matrix, index=[i for i in letters], columns=[i for i in letters])
 
     plot_confusion_matrix(confusion_matrix_data_frame)
@@ -144,7 +167,7 @@ def main_SVM():
         accuracy_level_letter.append(current_accuracy)
         print(f"Class {i}: accuracy: {current_accuracy}")
 
-    print("Overall score: ", svm.score(x, y))
+    print(OVERALL_SCORE, svm.score(x, y))
 
     plot_bar_chart(letters, accuracy_level_letter)
 
