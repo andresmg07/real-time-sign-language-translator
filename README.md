@@ -93,27 +93,29 @@ An incremental approach was applied in the training phase in order to optimize t
 |      2000       |            95%            |
 |      5000       |            96%            |
 |      7500       |            97%            |
+
 _TABLE I: Approximate prediction effectiveness of the support vector machine-based model as a function of the number of training specimens._
 
 ### Prediction distribution
 
 Based on the previous results, the highest effectiveness was achieved with a training set of 7500 specimens per letter, reaching an **effectiveness level of 97\%**. _TABLE II_ displays this training set and the approximate effectiveness distribution for each letter in the _ASL_ alphabet.
 
-| Letter  | Approximate effectiveness | Letter  | Approximate effectiveness |
-|---|---------------------------|---|---------------------------|
-| A | 98%                       | N | 73%                       |
-| B | 100%                      | O | 97%                       |
-| C | 99%                       | P | 97%                       |
-| D | 95%                       | Q | 98%                       |
-| E | 99%                       | R | 94%                       |
-| F | 100%                      | S | 97%                       |
-| G | 99%                       | T | 93%                       |
-| H | 97%                       | U | 95%                       |
-| I | 97%                       | V | 94%                       |
-| K | 97%                       | W | 98%                       |
-| L | 99%                       | X | 94%                       |
-| M | 92%                       | Y | 96%                       |
-_Approximate effectiveness distribution of the support vector machine-based recognition model with a training set of 7500 specimens per letter in the ASL alphabet._
+| Letter | Approximate effectiveness | Letter | Approximate effectiveness |
+|--------|---------------------------|--------|---------------------------|
+| A      | 98%                       | N      | 73%                       |
+| B      | 100%                      | O      | 97%                       |
+| C      | 99%                       | P      | 97%                       |
+| D      | 95%                       | Q      | 98%                       |
+| E      | 99%                       | R      | 94%                       |
+| F      | 100%                      | S      | 97%                       |
+| G      | 99%                       | T      | 93%                       |
+| H      | 97%                       | U      | 95%                       |
+| I      | 97%                       | V      | 94%                       |
+| K      | 97%                       | W      | 98%                       |
+| L      | 99%                       | X      | 94%                       |
+| M      | 92%                       | Y      | 96%                       |
+
+_TABLE II: Approximate effectiveness distribution of the support vector machine-based recognition model with a training set of 7500 specimens per letter in the ASL alphabet._
 
 ## Results analysis
 
