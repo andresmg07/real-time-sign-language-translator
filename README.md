@@ -170,13 +170,13 @@ The following are the relevant findings resulting from the implementation, train
 ## Co-Authors
 
 **Andrés Montero Gamboa**<br>
-Computing Engineering Undergraduate<br>
-Instituto Tecnológico de Costa Rica (TEC)<br>
+Computing Engineer<br>
+Graduated from Tecnológico de Costa Rica (TEC)<br>
 [LinkedIn](https://www.linkedin.com/in/andres-montero-gamboa) | [GitHub](https://github.com/andresmg07)
 
 **Joshua Gamboa Calvo**<br>
-Computing Engineering Undergraduate<br>
-Instituto Tecnológico de Costa Rica (TEC)<br>
+Computing Engineer<br>
+Graduated from Tecnológico de Costa Rica (TEC)<br>
 [LinkedIn](https://www.linkedin.com/in/joshgc19/) | [GitHub](https://github.com/joshgc19)
 
 **Álvaro Moreira Villalobos**<br>
